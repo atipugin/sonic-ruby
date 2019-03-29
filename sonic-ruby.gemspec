@@ -10,4 +10,5 @@ Gem::Specification.new do |spec|
   spec.authors = ['Alexander Tipugin']
 
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'rake'
 end
