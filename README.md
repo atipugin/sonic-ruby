@@ -88,3 +88,4 @@ search.suggest('users', 'all', 'alex')
 
 - [ ] Take into account maximum buffer size.
 - [ ] Consider using connection pool.
+- [ ] Return more meaningful responses from commands (i.e. bool `true` instead of string `OK`, int `1` instead of string `RESULT 1` etc).
