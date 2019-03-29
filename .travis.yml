@@ -1,7 +1,14 @@
 ---
+services:
+  - docker
+
 language: ruby
 rvm:
   - 2.6
+
+before_install:
+  - docker pull valeriansaliou/sonic:v1.1.8
+  - docker run -p 1491:1491 -v $TRAVIS_BUILD_DIR/spec/support/config.cfg:/etc/sonic.cfg valeriansaliou/sonic:v1.1.8
 
 script:
   - bundle exec rake rubocop
