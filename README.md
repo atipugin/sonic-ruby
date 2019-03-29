@@ -1,6 +1,7 @@
 # sonic-ruby
 
 [![Gem Version](https://badge.fury.io/rb/sonic-ruby.svg)](https://badge.fury.io/rb/sonic-ruby)
+[![Maintainability](https://api.codeclimate.com/v1/badges/dcbb9919a64c96fb629c/maintainability)](https://codeclimate.com/github/atipugin/sonic-ruby/maintainability)
 
 A Ruby client for [Sonic search backend](https://github.com/valeriansaliou/sonic).
 
