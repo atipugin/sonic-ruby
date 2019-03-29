@@ -1,5 +1,7 @@
 # sonic-ruby
 
+[![Gem Version](https://badge.fury.io/rb/sonic-ruby.svg)](https://badge.fury.io/rb/sonic-ruby)
+
 A Ruby client for [Sonic search backend](https://github.com/valeriansaliou/sonic).
 
 ## Installation
