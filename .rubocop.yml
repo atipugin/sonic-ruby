@@ -1,0 +1,7 @@
+---
+Style/Documentation:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - lib/sonic-ruby.rb

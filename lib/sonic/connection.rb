@@ -24,9 +24,7 @@ module Sonic
 
     def read
       data = socket.gets.chomp
-      if data.start_with?('ERR ')
-        raise ServerError, data
-      end
+      raise ServerError, data if data.start_with?('ERR ')
 
       data
     end
