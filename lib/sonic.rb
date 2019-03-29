@@ -1,3 +1,5 @@
+require 'socket'
+
 require 'sonic/version'
 require 'sonic/client'
 require 'sonic/channels'
