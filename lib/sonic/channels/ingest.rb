@@ -3,7 +3,7 @@ module Sonic
     class Ingest < Base
       def push(collection, bucket, object, text, lang = nil)
         arr = [collection, bucket, object, quote(text)]
-        arr += "LANG(#{lang})" if lang
+        arr << "LANG(#{lang})" if lang
 
         execute('PUSH', *arr)
       end
