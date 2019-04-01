@@ -52,23 +52,27 @@ ingest = client.channel(:ingest)
 
 # Add data to index
 ingest.push('users', 'all', 1, 'Alexander Tipugin')
-# => OK
+# => true
 
 # Remove data from index
 ingest.pop('users', 'all', 1, 'Alexander Tipugin')
-# => RESULT 2
+# => 2
+
+# Count collection/bucket/object items
+ingest.count('users', 'all', 1)
+# => 1
 
 # Flush entire collection
 ingest.flushc('users')
-# => RESULT 1
+# => 1
 
 # Flush entire bucket inside collection
 ingest.flushb('users', 'all')
-# => RESULT 1
+# => 1
 
 # Flush specific object inside bucket
 ingest.flusho('users', 'all', 1)
-# => RESULT 2
+# => 2
 ```
 
 ## Searching
@@ -79,15 +83,15 @@ search = client.channel(:search)
 
 # Find indexed object by term
 search.query('users', 'all', 'tipugin')
-# => EVENT QUERY duA0RC11 1
+# => 1
 
 # Auto-complete word
 search.suggest('users', 'all', 'alex')
-# => EVENT SUGGEST DdwCPJ4G alexander
+# => alexander
 ```
 
 ## TODO
 
 - [ ] Take into account maximum buffer size.
 - [ ] Consider using connection pool.
-- [ ] Return more meaningful responses from commands (i.e. bool `true` instead of string `OK`, int `1` instead of string `RESULT 1` etc).
+- [x] Return more meaningful responses from commands (i.e. bool `true` instead of string `OK`, int `1` instead of string `RESULT 1` etc).
