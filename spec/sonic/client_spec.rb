@@ -1,10 +1,8 @@
 module Sonic
   RSpec.describe Client do
-    subject { described_class.new(host, port, password) }
+    include_context 'client'
 
-    let(:host) { 'localhost' }
-    let(:port) { 1491 }
-    let(:password) { 'SecretPassword' }
+    subject { client }
 
     describe '#channel' do
       let(:type) { :control }

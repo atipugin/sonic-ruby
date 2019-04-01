@@ -1,19 +1,15 @@
 module Sonic
   module Channels
     RSpec.describe Control do
-      subject { described_class.new(connection) }
+      include_examples 'channel'
 
-      let(:connection) { Connection.connect(host, port, type, password) }
-      let(:host) { 'localhost' }
-      let(:port) { 1491 }
-      let(:type) { 'control' }
-      let(:password) { 'SecretPassword' }
+      subject { client.channel(:control) }
 
       describe '#trigger' do
         let(:action) { 'consolidate' }
 
-        it 'returns ok' do
-          expect(subject.trigger(action)).to eq('OK')
+        it 'returns true' do
+          expect(subject.trigger(action)).to eq(true)
         end
 
         context 'when action is invalid' do
