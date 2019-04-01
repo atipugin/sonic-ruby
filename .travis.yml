@@ -7,8 +7,8 @@ rvm:
   - 2.6
 
 before_install:
-  - docker pull valeriansaliou/sonic:v1.1.8
-  - docker run -d -p 1491:1491 -v $TRAVIS_BUILD_DIR/spec/support/config.cfg:/etc/sonic.cfg valeriansaliou/sonic:v1.1.8
+  - docker pull valeriansaliou/sonic:v1.1.9
+  - docker run -d -p 1491:1491 -v $TRAVIS_BUILD_DIR/spec/support/config.cfg:/etc/sonic.cfg valeriansaliou/sonic:v1.1.9
 
 script:
   - bundle exec rake rubocop
