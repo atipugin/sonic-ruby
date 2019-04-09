@@ -8,6 +8,9 @@ Gem::Specification.new do |spec|
   spec.version = Sonic::VERSION
   spec.summary = 'Ruby client for Sonic'
   spec.authors = ['Alexander Tipugin']
+  spec.files = `git ls-files -z`.split("\x0").reject { |f|
+    f.match(%r{^(test|spec|features)/})
+  } - ['.rubocop.yml', '.travis.yml', 'Gemfile.lock', '.gitignore', '.rspec']
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
