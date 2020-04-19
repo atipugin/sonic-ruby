@@ -28,9 +28,16 @@ module Sonic
         type_cast_response(connection.read)
       end
 
+      def normalize(value)
+        quote(sanitize(value))
+      end
+
+      def sanitize(value)
+        value.gsub('"', '\\"').gsub(/[\r\n]+/, ' ')
+      end
+
       def quote(value)
-        sanitized = value.gsub('"', '\\"').gsub(/[\r\n]+/, ' ')
-        "\"#{sanitized}\""
+        "\"#{value}\""
       end
 
       def type_cast_response(value)
