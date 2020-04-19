@@ -29,7 +29,8 @@ module Sonic
       end
 
       def quote(value)
-        "\"#{value}\""
+        sanitized = value.gsub('"', '\\"').gsub(/[\r\n]+/, ' ')
+        "\"#{sanitized}\""
       end
 
       def type_cast_response(value)
