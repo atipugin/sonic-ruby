@@ -2,7 +2,7 @@ module Sonic
   module Channels
     class Search < Base
       def query(collection, bucket, terms, limit = nil, offset = nil, lang = nil) # rubocop:disable Metrics/ParameterLists, Metrics/LineLength
-        arr = [collection, bucket, quote(terms)]
+        arr = [collection, bucket, normalize(terms)]
         arr << "LIMIT(#{limit})" if limit
         arr << "OFFSET(#{offset})" if offset
         arr << "LANG(#{lang})" if lang
@@ -13,7 +13,7 @@ module Sonic
       end
 
       def suggest(collection, bucket, word, limit = nil)
-        arr = [collection, bucket, quote(word)]
+        arr = [collection, bucket, normalize(word)]
         arr << "LIMIT(#{limit})" if limit
 
         execute('SUGGEST', *arr) do

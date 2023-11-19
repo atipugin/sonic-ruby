@@ -2,14 +2,14 @@ module Sonic
   module Channels
     class Ingest < Base
       def push(collection, bucket, object, text, lang = nil)
-        arr = [collection, bucket, object, quote(text)]
+        arr = [collection, bucket, object, normalize(text)]
         arr << "LANG(#{lang})" if lang
 
         execute('PUSH', *arr)
       end
 
       def pop(collection, bucket, object, text)
-        execute('POP', collection, bucket, object, quote(text))
+        execute('POP', collection, bucket, object, normalize(text))
       end
 
       def count(collection, bucket = nil, object = nil)
