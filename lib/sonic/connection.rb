@@ -13,7 +13,7 @@ module Sonic
     end
 
     def connect
-      read # ...
+      socket.gets # ...
       write(['START', @channel_type, @password].compact.join(' '))
       read.start_with?('STARTED ')
     end
@@ -23,20 +23,36 @@ module Sonic
     end
 
     def read
-      data = socket.gets.chomp
+      data = socket.gets&.chomp
+
+      raise ServerError, data if data.nil?
+      raise ServerError, data if data.start_with?('ENDED ')
       raise ServerError, data if data.start_with?('ERR ')
 
       data
     end
 
     def write(data)
-      socket.puts(data)
+      begin
+        socket.puts(data)
+      rescue Errno::EPIPE
+        reconnect
+        socket.puts(data)
+      end
     end
+
 
     private
 
     def socket
       @socket ||= TCPSocket.open(@host, @port)
+    end
+
+    def reconnect
+      @socket.close if @socket
+      @socket = TCPSocket.open(@host, @port)
+
+      connect
     end
   end
 end
