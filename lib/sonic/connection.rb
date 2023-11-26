@@ -19,25 +19,37 @@ module Sonic
     end
 
     def disconnect
-      socket.close
+      socket&.close
+      socket = nil
+    end
+
+    def connected?
+      !socket.nil?
     end
 
     def read
       data = socket.gets&.chomp
 
-      raise ServerError, data if data.nil?
-      raise ServerError, data if data.start_with?('ENDED ')
-      raise ServerError, data if data.start_with?('ERR ')
+      if data.nil?
+        # connection was dropped from timeout
+        disconnect
+        raise ServerError, "Connection expired. Please reconnect."
+      end
+
+      raise ServerError, "#{data} (#{@last_write})" if data.start_with?('ENDED ')
+      raise ServerError, "#{data} (#{@last_write})" if data.start_with?('ERR ')
 
       data
     end
 
     def write(data)
+      @last_write = data
+
       begin
         socket.puts(data)
-      rescue Errno::EPIPE
-        reconnect
-        socket.puts(data)
+      rescue Errno::EPIPE => error
+        disconnect
+        raise ServerError, "Connection expired. Please reconnect.", error.backtrace
       end
     end
 
@@ -45,14 +57,13 @@ module Sonic
     private
 
     def socket
-      @socket ||= TCPSocket.open(@host, @port)
+      @socket ||= begin
+                    socket = TCPSocket.open(@host, @port)
+                    # disables Nagle's Algorithm, prevents multiple round trips with MULTI
+                    socket.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1)
+                    socket
+                  end
     end
 
-    def reconnect
-      @socket.close if @socket
-      @socket = TCPSocket.open(@host, @port)
-
-      connect
-    end
   end
 end
