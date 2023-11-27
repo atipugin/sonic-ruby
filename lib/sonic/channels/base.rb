@@ -33,7 +33,7 @@ module Sonic
       end
 
       def sanitize(value)
-        value.gsub('"', '\\"').gsub(/[\r\n]+/, ' ')
+        value.gsub('"', '\\"').gsub(/[\r\n]+/, '\\n').gsub(/\\/, '\\\\')
       end
 
       def quote(value)
