@@ -16,8 +16,21 @@ module Sonic
       end
 
       def quit
-        execute('QUIT')
+        if connection.connected?
+          execute('QUIT')
+          connection.disconnect
+          return true
+        end
+
+        return false
+      end
+
+      def close
         connection.disconnect
+      end
+
+      def connected?
+        connection.connected?
       end
 
       private
@@ -33,7 +46,7 @@ module Sonic
       end
 
       def sanitize(value)
-        value.gsub('"', '\\"').gsub(/[\r\n]+/, ' ')
+        value.gsub('"', '\\"').gsub(/[\r\n]+/, '\\n').gsub(/\\/, '\\\\')
       end
 
       def quote(value)
@@ -46,7 +59,7 @@ module Sonic
         elsif value.start_with?('RESULT ')
           value.split(' ').last.to_i
         elsif value.start_with?('EVENT ')
-          value.split(' ')[3..-1].join(' ')
+          value.split(' ')[3..-1]
         else
           value
         end
