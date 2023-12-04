@@ -59,7 +59,7 @@ module Sonic
         elsif value.start_with?('RESULT ')
           value.split(' ').last.to_i
         elsif value.start_with?('EVENT ')
-          value.split(' ')[3..-1].join(' ')
+          value.split(' ')[3..-1]
         else
           value
         end
