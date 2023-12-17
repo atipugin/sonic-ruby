@@ -36,8 +36,8 @@ module Sonic
         raise ServerError, "Connection expired. Please reconnect."
       end
 
-      raise ServerError, "#{data} (#{@last_write})" if data.start_with?('ENDED ')
-      raise ServerError, "#{data} (#{@last_write})" if data.start_with?('ERR ')
+      raise ServerError, "#{data.force_encoding('UTF-8')} (#{@last_write})" if data.start_with?('ENDED ')
+      raise ServerError, "#{data.force_encoding('UTF-8')} (#{@last_write})" if data.start_with?('ERR ')
 
       data
     end
