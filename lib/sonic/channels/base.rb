@@ -46,7 +46,8 @@ module Sonic
       end
 
       def sanitize(value)
-        value.gsub('"', '\\"').gsub(/[\r\n]+/, '\\n').gsub(/\\/, '\\\\')
+        # remove backslashes entirely
+        value.gsub(/\\/, "").gsub('"', '\\"').gsub(/[\r\n]+/, '\\n')
       end
 
       def quote(value)
