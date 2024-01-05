@@ -20,6 +20,16 @@ module Sonic
           connection.read # ...
         end
       end
+
+      def list(collection, bucket, limit = nil, offset = nil)
+        arr = [collection, bucket]
+        arr << "LIMIT(#{limit})" if limit
+        arr << "OFFSET(#{offset})" if offset
+
+        execute('LIST', *arr) do
+          connection.read # ...
+        end
+      end
     end
   end
 end
